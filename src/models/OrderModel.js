@@ -14,7 +14,7 @@ const getOrderById = async (order_id) => {
   try {
     const [rows, fields] = await db.execute(
       "SELECT * FROM orders WHERE order_id = ?",
-      [entry_id]
+      [order_id]
     );
     return rows[0];
   } catch (error) {

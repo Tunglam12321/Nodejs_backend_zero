@@ -105,16 +105,20 @@ const deleteUser = async (req, res) => {
 
 const refreshToken = async (req, res) => {
   try {
-    const token = req.headers.token.split(" ")[1];
+    // const token = req.headers.token.split(" ")[1];
+    const refreshToken = req.headers.token.split(" ")[1];
     // Thực hiện cập nhật thông tin người dùng trong cơ sở dữ liệu
-    if (!token) {
-      return res.status(200).json({
+
+    if (!refreshToken) {
+      return res.json({
         status: "ERR",
-        message: "The token is required",
+        message: "The refreshToken is not valid",
       });
+    } else {
+      const response = await RefreshTokenService(refreshToken);
+      console.log(response);
+      return res.json(response);
     }
-    const response = await RefreshTokenService(token);
-    return res.status(200).json(response);
   } catch (e) {
     return res.status(404).json({ message: e });
   }
